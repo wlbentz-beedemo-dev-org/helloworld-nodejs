@@ -29,5 +29,21 @@ pipeline {
         echo "TODO - build and push image"
       }
     }
+    stage('Deploy') {
+      when {
+        beforeAgent true
+        branch 'master'
+      }
+      options {
+        timeout(time: 5, unit: 'SECONDS') 
+      }
+      input {
+        submitter "beedemo-ops"
+        submitterParameter "APPROVER"
+      }
+      steps {
+        echo "Continuing with deployment - approved by ${APPROVER}"
+      }
+    }
   }
 }
